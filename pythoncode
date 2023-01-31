@@ -1,0 +1,29 @@
+import random
+
+rando = random.randint(1,10)
+
+while True:
+    
+    user_in = input("Pick a number between 1 and 10: ")
+    try:
+        int_user = int(user_in)
+        if int_user == rando:
+            print("you got it!")
+            play_again = input("Play again? Y or N: ")
+            if play_again.lower() == "y":
+                rando = random.randint(1,10)
+    
+            elif play_again.lower() == "n":
+                print("Thanks for playing!")
+                break    
+        elif int_user < 1:
+            print("Please guess between 1 and 10")
+        elif int_user > 10:
+            print("Please stay within 1 and 10") 
+        elif int_user > rando:
+            print("too high. guess again: ")
+        elif int_user < rando:
+            print ("too low. guess again: ")
+        
+    except:
+        print("Try only whole numbers between 1 and 10")
