@@ -1,29 +1,45 @@
 import random
 
-rando = random.randint(1,10)
-
-while True:
-    
-    user_in = input("Pick a number between 1 and 10: ")
-    try:
+def get_validate_number_input():
+    good_data = False
+    while not good_data:
+        user_in = input("Pick a number between 1 and 10: ")
         int_user = int(user_in)
-        if int_user == rando:
-            print("you got it!")
-            play_again = input("Play again? Y or N: ")
-            if play_again.lower() == "y":
-                rando = random.randint(1,10)
+        if int_user > 10 or int_user < 1:
+            print("Please stay within 1 and 10")
+        else:
+            return int_user  # note we don't need to 'break' the loop explicitly when 'return'-ing
+
+def compare_vs_rando(int_user, rando):
     
-            elif play_again.lower() == "n":
-                print("Thanks for playing!")
-                break    
-        elif int_user < 1:
-            print("Please guess between 1 and 10")
-        elif int_user > 10:
-            print("Please stay within 1 and 10") 
-        elif int_user > rando:
-            print("too high. guess again: ")
-        elif int_user < rando:
-            print ("too low. guess again: ")
-        
-    except:
-        print("Try only whole numbers between 1 and 10")
+    if int_user == rando:
+        print("you got it!")
+        return True
+    elif int_user > rando:
+        print("too high. guess again: ")
+    elif int_user < rando:
+        print ("too low. guess again: ")
+    return False
+
+def play_again():
+    play_in = input("Play again? Y or N: ")
+    
+    if play_in.lower() == "y":
+        return True
+    elif play_in.lower() == "n":
+        print("Thanks for playing!")
+        return False
+    else:
+        print("Invalid input option")
+        return play_again()  # when a method calls itself, it's called "recursion"
+
+def main():
+    keep_playing = True
+    while keep_playing:
+        int_user = get_validate_number_input()
+        rando = random.randint(1,10)
+        while compare_vs_rando(int_user, rando) == False:
+            int_user = get_validate_number_input()
+        keep_playing = play_again()
+
+main()
